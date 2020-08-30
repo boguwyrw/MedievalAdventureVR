@@ -656,6 +656,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHand: {fileID: 493636421}
   leftHand: {fileID: 1016489922}
+  capsuleCollider: {fileID: 1084116518}
+  cameraTransform: {fileID: 534669905}
 --- !u!114 &1084116517
 MonoBehaviour:
   m_ObjectHideFlags: 0

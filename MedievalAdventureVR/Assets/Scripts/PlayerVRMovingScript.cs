@@ -2,23 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVRScript : MonoBehaviour
+public class PlayerVRMovingScript : MonoBehaviour
 {
     [SerializeField]
     private Transform rightHand;
     [SerializeField]
     private Transform leftHand;
+    [SerializeField]
+    private CapsuleCollider capsuleCollider;
+    [SerializeField]
+    private Transform cameraTransform;
 
     private Vector2 rightStick;
     private Vector2 leftStick;
 
     private float walkingSpeed = 3.0f;
     private float rotationSpeed = 25.0f;
-    private float characterSpeed = 0.0f;
+    private float playerSpeed = 0.0f;
+    private float difference = 0.15f;
 
     private void Awake()
     {
-        characterSpeed = walkingSpeed;
+        playerSpeed = walkingSpeed;
     }
 
     private void Update()
@@ -26,6 +31,7 @@ public class PlayerVRScript : MonoBehaviour
         HandsMovement();
         PlayersWalking();
         PlayersRotating();
+        PlayersHeight();
     }
 
     private void HandsMovement()
@@ -42,11 +48,11 @@ public class PlayerVRScript : MonoBehaviour
         rightStick = OVRInput.Get(OVRInput.RawAxis2D.RThumbstick);
         if (rightStick.y > 0.0f)
         {
-            transform.Translate(Vector3.forward * characterSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * playerSpeed * Time.deltaTime);
         }
         if (rightStick.y < 0.0f)
         {
-            transform.Translate(Vector3.back * characterSpeed * Time.deltaTime);
+            transform.Translate(Vector3.back * playerSpeed * Time.deltaTime);
         }
     }
 
@@ -61,5 +67,10 @@ public class PlayerVRScript : MonoBehaviour
         {
             transform.Rotate(0.0f, -rotationSpeed * Time.deltaTime, 0.0f);
         }
+    }
+
+    private void PlayersHeight()
+    {
+        capsuleCollider.height = cameraTransform.position.y + difference;
     }
 }
