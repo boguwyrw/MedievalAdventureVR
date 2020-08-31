@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponsScript : MonoBehaviour
 {
     private ISelectWeaponsScript selectWeaponsScript;
-    private float fireDelayTime = 1.5f;
+    private float fireDelayTime = 2.0f;
     private float nextFireTime;
 
     private void Awake()
@@ -16,20 +16,20 @@ public class WeaponsScript : MonoBehaviour
 
     void Update()
     {
-        fireDelayTime = fireDelayTime - Time.deltaTime;
-        /*
-        //if (fireDelayTime <= 0.0f)
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (CanFire())
         {
             FireWeapon();
-            fireDelayTime = nextFireTime;
         }
-        */
-        FireWeapon();
+    }
+
+    private bool CanFire()
+    {
+        return Time.time >= nextFireTime;
     }
 
     private void FireWeapon()
     {
         selectWeaponsScript.UseSelectedWeapon(this);
+        nextFireTime = Time.time + fireDelayTime;
     }
 }
