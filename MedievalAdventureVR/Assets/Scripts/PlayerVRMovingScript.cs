@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerVRMovingScript : MonoBehaviour
 {
     [SerializeField]
-    private Transform rightHand;
+    private Transform handRight;
     [SerializeField]
-    private Transform leftHand;
+    private Transform handLeft;
     [SerializeField]
     private CapsuleCollider capsuleCollider;
     [SerializeField]
@@ -36,11 +36,11 @@ public class PlayerVRMovingScript : MonoBehaviour
 
     private void HandsMovement()
     {
-        rightHand.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-        rightHand.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+        handRight.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+        handRight.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
 
-        leftHand.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-        leftHand.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
+        handLeft.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+        handLeft.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
     }
 
     private void PlayersWalking()
