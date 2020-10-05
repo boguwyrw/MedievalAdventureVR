@@ -25,6 +25,7 @@ public class RightHandEquipmentScript : MonoBehaviour, IHandsEquipmentScript
         if (other.gameObject.layer == 9)
         {
             other.transform.parent = rightHand.transform;
+            other.transform.position = rightHand.transform.GetChild(0).transform.position;
         }
     }
 }
