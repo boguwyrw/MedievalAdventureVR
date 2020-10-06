@@ -18,7 +18,7 @@ public class PlayerShootsScript : MonoBehaviour
         {
             arrowRigidbody.constraints = RigidbodyConstraints.None;
             arrowRigidbody.transform.parent = null;
-            arrowRigidbody.AddForce(arrowRigidbody.transform.TransformDirection(Vector3.back) * 4000 * Time.deltaTime, ForceMode.Force);
+            arrowRigidbody.AddForce(arrowRigidbody.transform.TransformDirection(Vector3.back) * 6500 * Time.deltaTime, ForceMode.Force);
             arrowRigidbody.useGravity = true;
         }
     }

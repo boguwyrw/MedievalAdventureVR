@@ -19,13 +19,14 @@ public class RightHandEquipmentScript : MonoBehaviour, IHandsEquipmentScript
         }
         */
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 9)
         {
             other.transform.parent = rightHand.transform;
-            other.transform.position = rightHand.transform.GetChild(0).transform.position;
+            other.gameObject.SetActive(false);
+            //other.transform.position = rightHand.transform.GetChild(0).transform.position;
         }
     }
 }

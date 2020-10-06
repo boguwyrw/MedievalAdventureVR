@@ -5,9 +5,9 @@ using UnityEngine;
 public class PlayerVRMovingScript : MonoBehaviour
 {
     [SerializeField]
-    private Transform handRight;
+    private Transform rightHand;
     [SerializeField]
-    private Transform handLeft;
+    private Transform leftHand;
     [SerializeField]
     private CapsuleCollider capsuleCollider;
     [SerializeField]
@@ -15,6 +15,8 @@ public class PlayerVRMovingScript : MonoBehaviour
 
     private Vector2 rightStick;
     private Vector2 leftStick;
+
+    private int equipmentNumber = 0;
 
     private float walkingSpeed = 3.0f;
     private float rotationSpeed = 25.0f;
@@ -31,16 +33,20 @@ public class PlayerVRMovingScript : MonoBehaviour
         HandsMovement();
         PlayersWalking();
         PlayersRotating();
-        PlayersHeight();
+        //PlayersHeight();
+        PlayersChangeEquipment();
     }
 
     private void HandsMovement()
     {
-        handRight.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
-        handRight.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+        if (equipmentNumber < rightHand.childCount)
+        {
+            rightHand.GetChild(equipmentNumber).localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+            rightHand.GetChild(equipmentNumber).localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+        }
 
-        handLeft.localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
-        handLeft.localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
+        leftHand.GetChild(0).localPosition = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
+        leftHand.GetChild(0).localRotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch);
     }
 
     private void PlayersWalking()
@@ -72,5 +78,28 @@ public class PlayerVRMovingScript : MonoBehaviour
     private void PlayersHeight()
     {
         capsuleCollider.height = cameraTransform.position.y + difference;
+    }
+
+    private void PlayersChangeEquipment()
+    {
+        if (OVRInput.Get(OVRInput.RawButton.A))
+        {
+            equipmentNumber++;
+
+            if (equipmentNumber > rightHand.childCount)
+            {
+                equipmentNumber = 0;
+            }
+        }
+
+        if (equipmentNumber > 0 && equipmentNumber < rightHand.childCount)
+        {
+            rightHand.GetChild(equipmentNumber).gameObject.SetActive(true);
+            rightHand.GetChild(equipmentNumber - 1).gameObject.SetActive(false);
+        }
+        else if (equipmentNumber == 0)
+        {
+            rightHand.GetChild(equipmentNumber).gameObject.SetActive(true);
+        }
     }
 }
